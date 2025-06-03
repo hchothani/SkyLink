@@ -1,1 +1,54 @@
-/backend/.env
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyd
+
+# === Virtual Environments ===
+.venv/
+venv/
+env/
+ENV/
+*.env
+*.env.*
+
+# === Jupyter Notebooks Checkpoints ===
+.ipynb_checkpoints/
+
+# === Logs and Debug ===
+*.log
+*.out
+*.err
+*.pid
+
+# === IDEs ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Model Files ===
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.tflite
+
+# === Dataset / Large Files ===
+data/
+datasets/
+*.zip
+*.tar.gz
+*.h5
+*.npz
+
+# === System ===
+.DS_Store
+Thumbs.db
+
+# === L
