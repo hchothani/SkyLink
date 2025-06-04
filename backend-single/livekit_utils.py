@@ -5,33 +5,31 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-class LiveKitManager():
-    def __init__(self):
-        self.lkapi = api.LiveKitAPI()
-
-    async def create_room(self, name:str, **kwargs) -> api.room.Room:
-        """Create a LiveKit room"""
-        room_config = api.room.CreateRoomRequest(
+async def create_room(name:str, **kwargs):
+    """Create a LiveKit room"""
+    lkapi = api.LiveKitAPI()
+    room_info =  await lkapi.room.create_room(api.CreateRoomRequest(
             name = name,
             empty_timeout = kwargs.get("empty_timeout", 60*60*24),
             metadata = kwargs.get("metadata", ""),
-            max_participants = kwargs.get("max_participants", 10),
-        )
+            max_participants = kwargs.get("max_participants", 10) 
+        ))
+    await lkapi.aclose()
+    return room_info
+        
 
-        return await self.lkapi.room.create_room(room_config)
+async def delete_room(name: str):
+    """Delete a LiveKit Room"""
+    lkapi = api.LiveKitAPI()
+    room_info = await lkapi.room.delete_room(
+        api.DeleteRoomRequest(room=name)
+    )
+    await lkapi.aclose()
+    return room_info
 
-    async def delete_room(self, name: str) -> None
-        """Delete a LiveKit Room"""
-        await self.lkapi.room.delete_room(
-            api.room.DeleteRoomRequest(room=name)
-        )
-
-    async def list_rooms(self) -> list[api.room.Room]
-        """List Active Rooms"""
-        response = await self.lkapi.room.list_rooms(api.room.ListRoomRequest())
-        return response.rooms
-
-    async def close(self):
-        """Close and Cleanup"""
-        await self.lkapi.aclose()
-    
+async def list_rooms():
+    """List Active Rooms"""
+    lkapi = api.LiveKitAPI()
+    response = await self.lkapi.room.list_rooms(api.room.ListRoomRequest())
+    await lkapi.aclose()
+    return response.rooms
