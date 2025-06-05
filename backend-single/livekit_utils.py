@@ -30,6 +30,6 @@ async def delete_room(name: str):
 async def list_rooms():
     """List Active Rooms"""
     lkapi = api.LiveKitAPI()
-    response = await self.lkapi.room.list_rooms(api.room.ListRoomRequest())
+    response = await lkapi.room.list_rooms(api.ListRoomsRequest())
     await lkapi.aclose()
     return response.rooms

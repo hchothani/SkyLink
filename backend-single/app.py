@@ -2,12 +2,16 @@ from livekit import api
 
 from fastapi import FastAPI, HTTPException, Body, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+
+from google.protobuf.json_format import MessageToDict
 
 import os
 from dotenv import load_dotenv
 from typing import Optional, Union
 
-from livekit_utils import create_room, delete_room
+from livekit_utils import create_room, delete_room, list_rooms
 
 load_dotenv()
 
@@ -71,5 +75,18 @@ async def delete_lk_room(room_name: str):
             "status": "success",
             "room": room.name
         } 
+    except Exception as e:
+        raise HTTPException(500, str(e))
+    
+@app.post("/listRooms")
+async def list_lk_rooms():
+    try:
+        rooms = await list_rooms()
+        print(rooms)
+        rooms_dicts = [MessageToDict(room) for room in rooms]
+        return {
+            "status": "success",
+            "rooms": rooms_dicts,
+        }
     except Exception as e:
         raise HTTPException(500, str(e))
