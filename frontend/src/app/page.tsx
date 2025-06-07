@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -13,27 +15,27 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
       description: "Track your entire drone fleet with live telemetry and status updates"
     },
     {
-      icon: <MapPin className="h-6 w-6" />,
+      icon: <MapPin className=" h-6 w-6" />,
       title: "Advanced Mapping",
       description: "Precise GPS tracking with detailed flight path visualization"
     },
     {
-      icon: <Camera className="h-6 w-6" />,
+      icon: <Camera className=" h-6 w-6" />,
       title: "Live Video Feeds",
       description: "Stream high-definition video from multiple drones simultaneously"
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
+      icon: <BarChart3 className=" h-6 w-6" />,
       title: "Analytics Dashboard",
       description: "Comprehensive insights and performance metrics for your operations"
     },
     {
-      icon: <Shield className="h-6 w-6" />,
+      icon: <Shield className=" h-6 w-6" />,
       title: "Secure Operations",
       description: "Enterprise-grade security with encrypted communications"
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      icon: <Zap className=" h-6 w-6" />,
       title: "Instant Alerts",
       description: "Real-time notifications for critical events and system status"
     }
@@ -47,8 +49,37 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
   ];
 
   export default function Home(){
+  const [formData, setFormData] = useState({
+    username: '',
+    companyName: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.username && formData.companyName) {
+      setIsSubmitting(true);
+      setTimeout(() => {
+        console.log("Logging In")
+      }, 1000);
+    }
+  };
+
+  const handleAdminAccess = () => {
+    console.log('Admin access requested');
+  };
   return (
-    <div className="min-h-screen bg-background">
+
+    
+    <div className="min-h-screen bg-background ">
       {/* Hero Section */}
       <div className="relative overflow-hidden"> {/* Background Pattern */} <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" /> <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
         
@@ -146,7 +177,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                 </CardHeader>
                 
                 <CardContent>
-                  <form onSubmit={} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="username">Username</Label>
@@ -154,8 +185,8 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           id="username"
                           name="username"
                           placeholder="Enter your username"
-                          value={}
-                          onChange={}
+                          value={formData.username}
+                          onChange={handleInputChange}
                           required
                         />
                       </div>
@@ -166,8 +197,8 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           id="companyName"
                           name="companyName"
                           placeholder="Enter your company name"
-                          value={}
-                          onChange={}
+                          value={formData.companyName}
+                          onChange={handleInputChange}
                           required
                         />
                       </div>
@@ -178,9 +209,9 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                         type="submit" 
                         className="w-full" 
                         size="lg"
-                        disabled={}
+                        disabled={isSubmitting}
                       >
-                        {False ? (
+                        {isSubmitting ? (
                           <>
                             <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
                             Connecting...
@@ -198,7 +229,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           type="button"
                           variant="destructive"
                           size="sm"
-                          onClick={}
+                          onClick={handleAdminAccess}
                         >
                           Admin
                         </Button>
@@ -246,7 +277,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 via-background to-accent/10">
+      <section className=" py-20 bg-gradient-to-r from-primary/10 via-background to-accent/10">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl lg:text-4xl font-bold">
