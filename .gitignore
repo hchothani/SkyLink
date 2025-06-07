@@ -1,3 +1,4 @@
+drones/samples/*
 # === Python ===
 __pycache__/
 *.py[cod]
