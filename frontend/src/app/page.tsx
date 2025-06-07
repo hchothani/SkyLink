@@ -50,10 +50,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
+      <div className="relative overflow-hidden"> {/* Background Pattern */} <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-accent/5" /> <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
         
         {/* Navigation */}
         <nav className="relative z-10 border-b bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/50">
