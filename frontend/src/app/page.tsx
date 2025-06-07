@@ -1,11 +1,3 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-	  <div> Hello World </div>
- );
-}
-
 import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -13,12 +5,6 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Badge } from '../components/ui/badge';
 import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users, BarChart3, Eye, Zap, Globe, ArrowRight, CheckCircle, Star } from 'lucide-react';
-
-
-
-  const handleAdminAccess = () => {
-    console.log('Admin access requested');
-  };
 
   const features = [
     {
@@ -60,6 +46,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
     { value: "24/7", label: "Support" }
   ];
 
+  export default function Home(){
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -162,7 +149,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                 </CardHeader>
                 
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={} className="space-y-6">
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="username">Username</Label>
@@ -170,8 +157,8 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           id="username"
                           name="username"
                           placeholder="Enter your username"
-                          value={formData.username}
-                          onChange={handleInputChange}
+                          value={}
+                          onChange={}
                           required
                         />
                       </div>
@@ -182,8 +169,8 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           id="companyName"
                           name="companyName"
                           placeholder="Enter your company name"
-                          value={formData.companyName}
-                          onChange={handleInputChange}
+                          value={}
+                          onChange={}
                           required
                         />
                       </div>
@@ -194,9 +181,9 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                         type="submit" 
                         className="w-full" 
                         size="lg"
-                        disabled={isSubmitting}
+                        disabled={}
                       >
-                        {isSubmitting ? (
+                        {False ? (
                           <>
                             <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
                             Connecting...
@@ -214,7 +201,7 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
                           type="button"
                           variant="destructive"
                           size="sm"
-                          onClick={handleAdminAccess}
+                          onClick={}
                         >
                           Admin
                         </Button>
@@ -310,4 +297,3 @@ import { Bone as Drone, Shield, Activity, MapPin, Camera, Signal, Battery, Users
   );
 };
 
-export default LandingPage;
