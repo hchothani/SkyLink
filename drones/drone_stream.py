@@ -94,7 +94,7 @@ class MediaFileStreamer:
 
     def reset(self):
         self._video_container.seek(0)
-        self._audio_container.seek(0)
+#        self._audio_container.seek(0)
 
     async def aclose(self) -> None:
         """Closes the media container and stops streaming."""
@@ -107,7 +107,6 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
     token_req = {
         "room":  room_name,
         "identity": media_path,
-        "publish": True,
     }
     response = requests.post(backend_url, params=token_req)
     print(response.status_code)
@@ -135,11 +134,18 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
         height=media_info.video_height,
     )
     logger.info(media_info)
+
 #    audio_source = rtc.AudioSource(
 #        sample_rate=media_info.audio_sample_rate,
 #        num_channels=media_info.audio_channels,
 #        queue_size_ms=queue_size_ms,
 #    )
+
+    audio_source = rtc.AudioSource(
+        sample_rate=48000,
+        num_channels=1,
+        queue_size_ms=queue_size_ms,
+    )
 
     video_track = rtc.LocalVideoTrack.create_video_track("video", video_source)
 #    audio_track = rtc.LocalAudioTrack.create_audio_track("audio", audio_source)
@@ -149,7 +155,7 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
         source=rtc.TrackSource.SOURCE_CAMERA,
         video_encoding=rtc.VideoEncoding(
             max_framerate=30,
-            max_bitrate=5_000_000,
+            max_bitrate=1_000_000,
         ),
     )
 #    audio_options = rtc.TrackPublishOptions(source=rtc.TrackSource.SOURCE_MICROPHONE)
@@ -158,7 +164,7 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
 #    await room.local_participant.publish_track(audio_track, audio_options)
 
     av_sync = rtc.AVSynchronizer(
-#        audio_source=audio_source,
+        audio_source=audio_source,
         video_source=video_source,
         video_fps=media_info.video_fps,
         video_queue_size_ms=queue_size_ms,
@@ -177,11 +183,11 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
         while True:
             await asyncio.sleep(2)
             wall_time = asyncio.get_running_loop().time() - start_time
-            diff = av_sync.last_video_time - av_sync.last_audio_time
+#            diff = av_sync.last_video_time - av_sync.last_audio_time
             logger.info(
                 f"fps: {av_sync.actual_fps:.2f}, wall_time: {wall_time:.3f}s, "
                 f"video_time: {av_sync.last_video_time:.3f}s, "
-                f"audio_time: {av_sync.last_audio_time:.3f}s, diff: {diff:.3f}s"
+#                f"audio_time: {av_sync.last_audio_time:.3f}s, diff: {diff:.3f}s"
             )
 
     try:
@@ -192,7 +198,7 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
 #            audio_stream = streamer.stream_audio()
 
             # read the head frames and push them at the same time
-            first_video_frame, video_timestamp = await video_stream.__anext__()
+            first_video_frame, video_timestamp = await anext(video_stream)
 #            first_audio_frame, audio_timestamp = await audio_stream.__anext__()
             logger.info(
                 f"first video duration: {1 / media_info.video_fps:.3f}s, "

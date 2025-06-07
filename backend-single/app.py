@@ -30,7 +30,7 @@ def root_test():
     return {"Hello": "World"}
 
 @app.post("/getToken")
-def generate_token(room: str, identity: str, name: str = Body("anonymous"), publish: bool = Body(False)):
+def generate_token(room: str, identity: str, name: str = Body("anonymous")):
     """LiveKit Token Generation"""
     try:
         token = api.AccessToken() \
@@ -39,7 +39,7 @@ def generate_token(room: str, identity: str, name: str = Body("anonymous"), publ
             .with_grants(api.VideoGrants(
                              room = room,
                              room_join = True,
-                             can_publish = publish,
+                             can_publish = True,
                              can_subscribe = True,
                          )).to_jwt()
         return {"token": token}
