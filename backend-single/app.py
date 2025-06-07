@@ -29,7 +29,7 @@ app.add_middleware(
 def root_test():
     return {"Hello": "World"}
 
-@app.post("/getToken")
+@app.get("/getToken")
 def generate_token(room: str, identity: str, name: str = Body("anonymous")):
     """LiveKit Token Generation"""
     try:

@@ -108,7 +108,7 @@ async def main(room: rtc.Room, room_name: str, media_path: str):
         "room":  room_name,
         "identity": media_path,
     }
-    response = requests.post(backend_url, params=token_req)
+    response = requests.get(backend_url, params=token_req)
     print(response.status_code)
     res = response.json()
     print(res)
